@@ -1,8 +1,7 @@
 const Genre = require('../../db/models/Genre')
 const Movie = require('../../db/models/Movie')
 
-// const Celebrity = require('../../db/modles/Celebrity')
-// const jwt = require('jsonwebtoken')
+
 require('dotenv').config()
 
 const getAllmovies = async (req, res, next) => {
@@ -10,7 +9,7 @@ const getAllmovies = async (req, res, next) => {
         console.log(req.user)
 
 
-        const movie = await Movie.find()
+        const movie = await Movie.find().populate("genres", "name").populate("actors", "name").populate("reviews", "ratings review")
         return res.status(200).json(movie)
     } catch (error) {
         next(error)
@@ -21,7 +20,7 @@ const createmovie = async (req, res, next) => {
 
         const staff = req.user.isStaff
         if (staff) {
-            // const genres = await Genre.find({ _id: req.body.genres })
+            ``
             const movie = await Movie.create(req.body)
 
             return res.status(201).json(movie)
@@ -73,5 +72,19 @@ const getMovie = async (req, res, next) => {
     }
 
 }
+const deleteMovie = async (req, res, next) => {
+    try {
+        const staff = req.user.isStaff
+        if (staff) {
 
-module.exports = { getAllmovies, createmovie, addGenraToMovie, getMovie }
+            await Movie.deleteOne()
+
+            return res.status(204).end()
+        } return res.status(401).json({ msg: "you are not authorized to add movies" })
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports = { getAllmovies, createmovie, addGenraToMovie, getMovie, deleteMovie }
