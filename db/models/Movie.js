@@ -9,6 +9,7 @@ const MovieSchema = new Schema({
 
     genres: [{ type: Schema.Types.ObjectId, ref: "Genre" }],
     reviews: [{ type: Schema.Types.ObjectId, ref: "Review" }],
+    watchlist: { type: Schema.Types.ObjectId, ref: "Watchlist" },
 
 
 

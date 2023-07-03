@@ -12,6 +12,7 @@ const movieRouter = require('./apis/movies/movies.routes')
 const genresRouter = require("./apis/Genres/genres.routes")
 const reviewsRouter = require("./apis/reviews/reviews.routes")
 const CelebrityRouter = require("./apis/Celebrities/celebrities.routes")
+
 const { localStrategy, jwtStrategy } = require('./middlewares/localStrategy')
 const passport = require('passport')
 const path = require('path')
@@ -32,6 +33,7 @@ app.use('/api', movieRouter)
 app.use('/api', CelebrityRouter)
 app.use("/api", genresRouter)
 app.use("/api", reviewsRouter)
+
 // middlewares after routes
 app.use(notFound)
 app.use(errorHandler)
